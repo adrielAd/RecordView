@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.devlomi.record_view.OnBasketAnimationEnd;
@@ -17,6 +18,7 @@ import java.util.concurrent.TimeUnit;
 
 public class MainActivity extends AppCompatActivity {
 
+    EditText editText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
 
         RecordView recordView = (RecordView) findViewById(R.id.record_view);
         RecordButton recordButton = (RecordButton) findViewById(R.id.record_button);
+        editText = findViewById(R.id.editText);
 
         //IMPORTANT
         recordButton.setRecordView(recordView);
@@ -63,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
             public void onStart() {
                 Log.d("RecordView", "onStart");
                 Toast.makeText(MainActivity.this, "OnStartRecord", Toast.LENGTH_SHORT).show();
-
+                editText.setVisibility(View.GONE);
             }
 
             @Override
@@ -72,6 +75,7 @@ public class MainActivity extends AppCompatActivity {
 
                 Log.d("RecordView", "onCancel");
 
+                //editText.setVisibility(View.VISIBLE);
             }
 
             @Override
@@ -80,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
                 String time = getHumanTimeText(recordTime);
                 Toast.makeText(MainActivity.this, "onFinishRecord - Recorded Time is: " + time, Toast.LENGTH_SHORT).show();
                 Log.d("RecordView", "onFinish");
-
+                editText.setVisibility(View.VISIBLE);
                 Log.d("RecordTime", time);
             }
 
@@ -88,6 +92,7 @@ public class MainActivity extends AppCompatActivity {
             public void onLessThanSecond() {
                 Toast.makeText(MainActivity.this, "OnLessThanSecond", Toast.LENGTH_SHORT).show();
                 Log.d("RecordView", "onLessThanSecond");
+                editText.setVisibility(View.VISIBLE);
             }
         });
 
@@ -96,6 +101,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onAnimationEnd() {
                 Log.d("RecordView", "Basket Animation Finished");
+                editText.setVisibility(View.VISIBLE);
             }
         });
 
